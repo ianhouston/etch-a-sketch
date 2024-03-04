@@ -25,6 +25,12 @@ for (let i = 0; i < BASE_SIZE; i++) {
     }
 }
 
+//makes a grid member darken its color
+const darkenGridMember = (event) => {
+    //either loop through grid2dArray to find === to event.currentTarget
+    // or find a way to mutate the target div through the event object itself
+} 
+
 //clears grid array and grid container
 const clearGrid = () => {
     grid2dArray = [];
