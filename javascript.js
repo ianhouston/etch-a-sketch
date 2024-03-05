@@ -25,13 +25,18 @@ for (let i = 0; i < BASE_SIZE; i++) {
     }
 }
 
-//makes a grid member darken its color
-const darkenGridMember = (event) => {
-    //either loop through grid2dArray to find === to event.currentTarget
-    // or find a way to mutate the target div through the event object itself
-} 
+// adding events to the grid members
+const giveGridEvents = () => {
+    grid2dArray.flat().forEach((gridMember) => {
+        gridMember.addEventListener('mouseover', function (event) {
+            event.target.style.background = 'black';
+        });
+    });
+}
 
-//clears grid array and grid container
+giveGridEvents();
+
+// clears grid array and grid container
 const clearGrid = () => {
     grid2dArray = [];
     while (gridContainer.lastElementChild) {
@@ -39,20 +44,27 @@ const clearGrid = () => {
     }
 }
 
-//makes a new grid according to the given integer size
-const changeGrid = (newSize) => {
-    clearGrid();
-    gridContainer.style.maxWidth = `${(((window.innerHeight/newSize)-(gridContainerSpacePx*(newSize+1))-(titleBannerHeight/newSize))*newSize)+(gridContainerSpacePx*(newSize+1))}px`;
-    for (let i = 0; i < newSize; i++) {
-        grid2dArray.push([]);
-        for (let j = 0; j < newSize; j++) {
-            grid2dArray[i].push(document.createElement('div'));
-            grid2dArray[i][j].setAttribute('style', `background-color: darkgray; 
-                                            width: ${(window.innerHeight/newSize)-(gridContainerSpacePx*(newSize+1))-(titleBannerHeight/newSize)}px; 
-                                            height: ${(window.innerHeight/newSize)-(gridContainerSpacePx*(newSize+1))-(titleBannerHeight/newSize)}px; 
-                                            flex-grow: 0;`);
-            gridContainer.appendChild(grid2dArray[i][j]);
+// makes a new grid according to the given integer size
+function changeGrid(newSize) {
+    if (isNaN(newSize)) {
+        alert("That is not a valid length. Please enter an integer when the next prompt appears.");
+        promptNewGridSize();
+    }
+    else {
+        clearGrid();
+        gridContainer.style.maxWidth = `${(((window.innerHeight/newSize)-(gridContainerSpacePx*(newSize+1))-(titleBannerHeight/newSize))*newSize)+(gridContainerSpacePx*(newSize+1))}px`;
+        for (let i = 0; i < newSize; i++) {
+            grid2dArray.push([]);
+            for (let j = 0; j < newSize; j++) {
+                grid2dArray[i].push(document.createElement('div'));
+                grid2dArray[i][j].setAttribute('style', `background-color: darkgray; 
+                                                width: ${(window.innerHeight/newSize)-(gridContainerSpacePx*(newSize+1))-(titleBannerHeight/newSize)}px; 
+                                                height: ${(window.innerHeight/newSize)-(gridContainerSpacePx*(newSize+1))-(titleBannerHeight/newSize)}px; 
+                                                flex-grow: 0;`);
+                gridContainer.appendChild(grid2dArray[i][j]);
+            }
         }
+        giveGridEvents();
     }
 }
 
